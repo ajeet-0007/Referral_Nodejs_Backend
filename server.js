@@ -4,11 +4,16 @@ const express = require('express');
 const app = express();
 const http = require('http'); // Required for socket.io
 const { Server } = require('socket.io');
+const cors = require('cors');
 
 const db = require('./config/databaseConfig');
 const PORT = process.env.PORT || 8080
 const server = http.createServer(app);
-const io = new Server(server); 
+const io = new Server(server);
+
+app.use(cors(
+  {origin: '*'}
+)) // Enable CORS for all routes
 
 
 
@@ -25,7 +30,7 @@ app.use(express.json())
 io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
   
-    // Handle user-specific notifications
+    // Handle user-specific notifications`
     socket.on('subscribe', (userId) => {
       console.log(`User ${userId} subscribed to notifications`);
       socket.join(`user_${userId}`); // Join a room for the user

@@ -18,6 +18,10 @@ const AppInfo = sequelize.define('AppInfo', {
   appImageUrl: {
     type: DataTypes.STRING(2048),
     allowNull: false,
+  },
+  active: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   }
 }, {
   timestamps: false
