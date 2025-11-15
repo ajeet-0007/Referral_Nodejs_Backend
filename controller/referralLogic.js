@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const Transaction = require('../models/transaction');
 const Earning = require('../models/earnings');
+const AppInfo = require('../models/appInfo');
 
 exports.createUser = async (req, res) => {
     try {
@@ -90,3 +91,16 @@ exports.getEarningsOfUser = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" })
     }
 }
+
+exports.getAppMetrics = async (req, res) => {
+    try {
+        const appMetrics = await AppInfo.findAll();
+        if (!appMetrics) {
+            return res.status(404).json({ message: "App metrics not found" });
+        }
+        res.json(appMetrics);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Internal Server Error" })
+    }
+};
